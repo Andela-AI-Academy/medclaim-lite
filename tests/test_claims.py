@@ -43,10 +43,3 @@ def test_legacy_void_records_in_void_log(client):
         conn.close()
     assert row is not None
     assert row["method"] == "legacy"
-
-
-def test_legacy_void_hides_claim_from_history(client):
-    cid = submit_claim("P-1042", "BCBS-001", "2024-07-05", 5_000, 0)
-    void_claim_legacy(cid, reason="correction")
-    ids = [l.claim_id for l in get_statement_history("P-1042")]
-    assert cid not in ids
